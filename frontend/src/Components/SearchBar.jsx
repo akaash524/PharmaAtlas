@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 import { BASE_URL } from "../config/api.js";
 
 import { useMapStore }
-from "../store/mapStore";
+from "../store/mapStore.js";
 
 function SearchBar() {
 

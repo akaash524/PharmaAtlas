@@ -10,7 +10,7 @@ import axios from "axios";
 
 import { BASE_URL } from "../config/api";
 import { useAuth } from "../store/authStore";
-import MyReports from "../components/MyReports";
+import MyReports from "./MyReports";
 
 function UserProfile() {
   const { currentUser } = useAuth();

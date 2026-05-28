@@ -10,11 +10,11 @@ import { FilePlus2 } from "lucide-react";
 import LandingPage from "./LandingPage";
 
 // COMPONENTS
-import MapView from "../components/MapView";
-import SearchBar from "../components/SearchBar";
-import ReportForm from "../components/ReportForm";
+import MapView from "./MapView";
+import SearchBar from "./SearchBar";
+import ReportForm from "./ReportForm";
 import NotificationBox from "./NotificationBox";
-import SuggestionBox from "../components/SuggestionBox";
+import SuggestionBox from "./SuggestionBox";
 
 function Home() {
 
