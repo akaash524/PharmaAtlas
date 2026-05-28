@@ -2,7 +2,7 @@
 import authBg from "../assets/login_bg.png";
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { useAuth } from "../store/authStore";
+import { useAuth } from "../store/authStore.js";
 
 function Login() {
 

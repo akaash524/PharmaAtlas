@@ -3,7 +3,7 @@
 import axios from "axios";
 import { create } from "zustand";
 
-import { BASE_URL } from "../config/api";
+import { BASE_URL } from "../config/api.js";
 
 export const useMapStore = create(
   (set, get) => ({

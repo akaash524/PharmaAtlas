@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router";
 
 import { BASE_URL }
-from "../config/api";
+from "../config/api.js";
 
 function Signup() {
 

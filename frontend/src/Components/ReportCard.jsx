@@ -2,8 +2,8 @@
 
 import React, { useMemo, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../config/api";
-import { useAuth } from "../store/authStore";
+import { BASE_URL } from "../config/api.js";
+import { useAuth } from "../store/authStore.js";
 function ReportCard({ report, refreshReports }) {
   const [loading, setLoading] = useState(false);
 

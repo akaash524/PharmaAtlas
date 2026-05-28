@@ -6,14 +6,14 @@ import React, {
 } from "react";
 
 import axios from "axios";
-import { BASE_URL } from "../config/api";
+import { BASE_URL } from "../config/api.js";
 
 
 import { useMapStore }
-from "../store/mapStore";
+from "../store/mapStore.js";
 
 import { useAuth }
-from "../store/authStore";
+from "../store/authStore.js";
 
 function NotificationBox() {
 

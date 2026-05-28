@@ -1,7 +1,7 @@
 // AdminStats.jsx
 
 import React, { useEffect, useState } from "react";
-import { BASE_URL } from "../config/api";
+import { BASE_URL } from "../config/api.js";
 import axios from "axios";
 
 // ── SVG ICONS ──────────────────────────────────────────

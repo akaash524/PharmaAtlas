@@ -31,7 +31,7 @@ import {
 import L from "leaflet";
 
 import { useMapStore }
-from "../store/mapStore";
+from "../store/mapStore.js";
 
 // REMOVE DEFAULT ICON
 delete L.Icon.Default.prototype._getIconUrl;

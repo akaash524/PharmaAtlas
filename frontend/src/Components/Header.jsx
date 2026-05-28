@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 
 import { useAuth }
-from "../store/authStore";
+from "../store/authStore.js";
 
 function Header() {
 

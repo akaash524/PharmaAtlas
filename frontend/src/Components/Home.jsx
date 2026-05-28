@@ -2,19 +2,19 @@
 
 import React, { useState } from "react";
 import { Bot } from "lucide-react";
-import { useAuth } from "../store/authStore";
-import ReportById from "./ReportById";
+import { useAuth } from "../store/authStore.js";
+import ReportById from "./ReportById.jsx";
 import { FilePlus2 } from "lucide-react";
 
 // PUBLIC PAGE
-import LandingPage from "./LandingPage";
+import LandingPage from "./LandingPage.jsx";
 
 // COMPONENTS
-import MapView from "./MapView";
-import SearchBar from "./SearchBar";
-import ReportForm from "./ReportForm";
-import NotificationBox from "./NotificationBox";
-import SuggestionBox from "./SuggestionBox";
+import MapView from "./MapView.jsx";
+import SearchBar from "./SearchBar.jsx";
+import ReportForm from "./ReportForm.jsx";
+import NotificationBox from "./NotificationBox.jsx";
+import SuggestionBox from "./SuggestionBox.jsx";
 
 function Home() {
 

@@ -3,13 +3,13 @@
 import React, { useState } from "react";
 
 // TAB COMPONENTS
-import AdminStats from "./AdminStats";
-import ManageUsers from "./ManageUsers";
-import ManageMedicines from "./ManageMedicines";
-import ManagePharmacies from "./ManagePharmacies";
-import ManageReports from "./ManageReports";
+import AdminStats from "./AdminStats.jsx";
+import ManageUsers from "./ManageUsers.jsx";
+import ManageMedicines from "./ManageMedicines.jsx";
+import ManagePharmacies from "./ManagePharmacies.jsx";
+import ManageReports from "./ManageReports.jsx";
 
-import { useAuth } from "../store/authStore";
+import { useAuth } from "../store/authStore.js";
 
 function AdminProfile() {
   const { currentUser } = useAuth();

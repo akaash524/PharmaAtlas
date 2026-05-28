@@ -8,9 +8,9 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 
-import { BASE_URL } from "../config/api";
-import { useAuth } from "../store/authStore";
-import MyReports from "./MyReports";
+import { BASE_URL } from "../config/api.js";
+import { useAuth } from "../store/authStore.js";
+import MyReports from "./MyReports.jsx";
 
 function UserProfile() {
   const { currentUser } = useAuth();

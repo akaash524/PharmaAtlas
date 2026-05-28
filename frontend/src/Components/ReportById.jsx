@@ -7,7 +7,7 @@ import React, {
 
 import { Copy } from "lucide-react";
 import axios from "axios";
-import { BASE_URL } from "../config/api";
+import { BASE_URL } from "../config/api.js";
 
 import {
   ShieldCheck,

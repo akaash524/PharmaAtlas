@@ -3,9 +3,9 @@ import { Trash2 } from "lucide-react";
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { BASE_URL } from "../config/api";
+import { BASE_URL } from "../config/api.js";
 
-import ReportCard from "./ReportCard";
+import ReportCard from "./ReportCard.jsx";
 
 function MyReports() {
   const [reports, setReports] = useState([]);
