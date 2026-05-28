@@ -1,0 +1,58 @@
+###test route 
+GET http://localhost:4040/common-api/
+
+
+
+
+###signup
+POST http://localhost:4040/user-api/users
+Content-Type: application/json
+
+{
+    "name":"charan",
+    "email":"charan@gmail.com",
+    "password":"user1234"
+}
+
+
+
+
+###login admin
+POST http://localhost:4040/common-api/login
+Content-Type: application/json
+
+{
+    "email":"akaash@gmail.com",
+    "password":"user1234"
+}
+
+
+
+
+###logout
+GET http://localhost:4040/common-api/logout
+
+
+
+
+
+###get all users
+GET http://localhost:4040/admin-api/users
+
+
+
+
+###add a medicine 
+POST http://localhost:4040/admin-api/medicines
+Content-Type: application/json
+
+{
+    "name": "Dolo 650",
+    "genericName": "Paracetamol",
+    "category": "Fever & Pain Relief",
+    "manufacturer": "Micro Labs",
+    "isRare": false
+}
+
+
+

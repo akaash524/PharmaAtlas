@@ -1,0 +1,12 @@
+/* singing map-conatner  */
+.leaflet-container{
+    height: 100vh;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
