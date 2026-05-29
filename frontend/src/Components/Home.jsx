@@ -1,8 +1,10 @@
 // Home.jsx
 
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Bot } from "lucide-react";
 import { useAuth } from "../store/authStore.js";
+import { useMapStore } from "../store/mapStore.js";
+import { socket } from "../socket/socket.js";
 import ReportById from "./ReportById.jsx";
 import { FilePlus2 } from "lucide-react";
 
@@ -36,10 +38,27 @@ function Home() {
     setOpenReportForm,
   ] = useState(false);
 
+  const { appendReport } = useMapStore();
   // PUBLIC LANDING PAGE
   if (!isAuthenticated) {
     return <LandingPage />;
   }
+
+  useEffect(() => {
+      socket.on("connect", () => {
+        console.log("Socket connected:", socket.id);
+      });
+      socket.on("report:created", (newReport) => {
+        console.log(
+          "New realtime report:",
+          newReport
+        );
+        appendReport(newReport);
+      });
+      return () => {
+        socket.off("report:created");
+      };
+    }, []);
 
   return (
     <div

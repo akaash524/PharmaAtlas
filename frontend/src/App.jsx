@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router'
 import './App.css'
+import { socket } from './socket/socket.js'
 import Home from './Components/Home.jsx'
 import RootLayout from './Components/RootLayout.jsx'
 import ErrorBoundary from './Components/ErrorBoundary.jsx'

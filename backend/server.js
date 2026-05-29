@@ -9,16 +9,71 @@ import { adminApp } from './APIS/adminAPI.js'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 
+/*
+========================================
+NEW IMPORTS
+========================================
+*/
+import http from 'http'
+import { Server } from 'socket.io'
+
 config()
 
 const app = exp()
+
+/*
+========================================
+CREATE HTTP SERVER
+========================================
+*/
+
+const server = http.createServer(app)
+
+/*
+========================================
+SOCKET.IO SERVER
+========================================
+*/
+
+export const io = new Server(server, {
+  cors: {
+    origin: [
+      'http://localhost:5173',
+      'https://pharma-atlas.vercel.app',
+    ],
+    credentials: true,
+  },
+})
+
+/*
+========================================
+SOCKET CONNECTION
+========================================
+*/
+
+io.on('connection', (socket) => {
+
+  console.log(
+    `Socket connected: ${socket.id}`
+  )
+
+  socket.on('disconnect', () => {
+
+    console.log(
+      `Socket disconnected: ${socket.id}`
+    )
+  })
+})
 
 // ─────────────────────────────
 // MIDDLEWARES
 // ─────────────────────────────
 
 app.use(cors({
-  origin: ['http://localhost:5173',"https://pharma-atlas.vercel.app"],
+  origin: [
+    'http://localhost:5173',
+    'https://pharma-atlas.vercel.app',
+  ],
   credentials: true
 }))
 
@@ -48,7 +103,13 @@ async function connectDB() {
 
     console.log('Successfully Connected to DB')
 
-    app.listen(process.env.PORT, () => {
+    /*
+    ========================================
+    USE server.listen INSTEAD OF app.listen
+    ========================================
+    */
+
+    server.listen(process.env.PORT, () => {
 
       console.log(
         `Server is up and listening to ${process.env.PORT}`

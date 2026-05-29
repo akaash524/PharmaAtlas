@@ -7,8 +7,7 @@ import { PharmacieModel } from '../MODELS/pharmacieModel.js'
 import { UserModel } from '../MODELS/userModel.js'
 import { register } from '../SERVICES/authService.js'
 import { hash,compare } from 'bcryptjs'
-
-// import { io } from '../server.js'
+import { io } from '../server.js'
 
 export const userApp = exp.Router()
 
@@ -31,17 +30,35 @@ userApp.post("/users",async (req, res, next) => {
 // ─────────────────────────────────────────────
 
 // POST /api/reports → submit a new report
-userApp.post('/reports', verifyToken('user'), async (req, res) => {
-    req.body.userId=req.user._id
-    let newReport = new ReportModel(req.body)
-    //console.log(newReport)
-    newReport.expiresAt = new Date(
-        Date.now() + 48 * 60 * 60 * 1000
-    )
-    await newReport.validate()
-    let newReportDoc = await newReport.save()
-    res.status(201).json({ message: 'New report created', payload: newReportDoc })
-})
+userApp.post('/reports',verifyToken('user'),async (req, res) => {
+    try {
+      req.body.userId = req.user._id
+      let newReport = new ReportModel(req.body)
+      newReport.expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000)
+      await newReport.validate()
+      let newReportDoc =await newReport.save()
+      /*
+      ========================================
+      POPULATE REPORT
+      ========================================
+      */
+      const populatedReport = await ReportModel.findById(newReportDoc._id)
+          .populate('medicineId','name genericName')
+          .populate('pharmacyId','name address location isVerified')
+          .populate('userId','name')
+      /*
+      ========================================
+      SOCKET EVENT
+      ========================================
+      */
+      io.emit('report:created',populatedReport)
+      res.status(201).json({message: 'New report created',payload: populatedReport,})
+    } catch (err) {
+      console.log(err)
+      res.status(500).json({message:'Failed to create report',})
+    }
+  }
+)
 
 // GET /api/reports/nearby → nearby reports (MUST be before /reports/:id)
 userApp.get('/reports/nearby', verifyToken('user','admin'), async (req, res) => {
@@ -106,14 +123,56 @@ userApp.get('/reports/:id', verifyToken('user', 'admin'), async (req, res) => {
 })
 
 // DELETE /api/reports/:id → delete own report
-userApp.delete('/reports/:id', verifyToken('user', 'admin'), async (req, res) => {
-    let report = await ReportModel.findOne({ _id: req.params.id, userId: req.user._id })
-    if (!report) {
-        return res.status(404).json({ message: 'Report not found or unauthorized' })
+userApp.delete('/reports/:id',verifyToken('user', 'admin'),async (req, res) => {
+
+    try {
+
+      let report =
+        await ReportModel.findOne({
+          _id: req.params.id,
+          userId: req.user._id
+        })
+
+      if (!report) {
+
+        return res.status(404).json({
+          message:
+            'Report not found or unauthorized'
+        })
+      }
+
+      await ReportModel.findByIdAndDelete(
+        req.params.id
+      )
+
+      /*
+      ========================================
+      SOCKET EVENT
+      ========================================
+      */
+
+      io.emit(
+        'report:deleted',
+        {
+          reportId: req.params.id
+        }
+      )
+
+      res.status(200).json({
+        message: 'Report deleted',
+        payload: report
+      })
+
+    } catch (err) {
+
+      console.log(err)
+
+      res.status(500).json({
+        message: 'Failed to delete report'
+      })
     }
-    await ReportModel.findByIdAndDelete(req.params.id)
-    res.status(200).json({ message: 'Report deleted', payload: report })
-})
+  }
+)
 
 
 //get my reports 

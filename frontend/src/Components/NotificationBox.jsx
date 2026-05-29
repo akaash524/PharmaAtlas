@@ -29,7 +29,7 @@ function NotificationBox() {
   const nearby_Reports_Without_Interactions =
     nearbyReports.filter(
       (report) =>
-        !report.interactions.some(
+        !report.interactions?.some(
           (interaction) =>
             interaction.userId.toString() ===
             currentUser._id.toString()
