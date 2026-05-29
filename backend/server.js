@@ -18,7 +18,7 @@ const app = exp()
 // ─────────────────────────────
 
 app.use(cors({
-  origin: ['http://localhost:5173'],
+  origin: ['http://localhost:5173',"https://pharma-atlas.vercel.app"],
   credentials: true
 }))
 

@@ -12,11 +12,11 @@ commonApp.post('/login',async (req,res)=>{
     //craete the token
     let { token , user }=await authentication(userCred)
     //save as htttp cookie only 
-    res.cookie("token",token,{
-        httpOnly:true,
-        sameSite:"lax",
-        secure:false,
-    })
+    res.cookie("token", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+    });
     //send response
     res.status(200).json({ message:"Login Success", payload:user })
 
