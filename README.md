@@ -119,6 +119,27 @@ Administrative controls include:
 
 ---
 
+## Real-Time Notification System
+
+The platform now supports live real-time medicine reporting updates using Socket.IO.
+
+Users instantly receive notifications when:
+
+* A new medicine report is submitted nearby
+* Medicine availability changes
+* Nearby pharmacies receive new stock reports
+
+Features include:
+
+* Live notification badge updates
+* Instant cross-browser synchronization
+* Real-time report delivery
+* Dynamic UI updates without page refresh
+* Community interaction workflows (verify / deny / skip)
+
+---
+
+
 # Tech Stack
 
 ## Frontend
@@ -154,6 +175,13 @@ Administrative controls include:
 * AI-powered medicine suggestions
 * Intelligent recommendation workflows
 * Search assistance system
+
+---
+
+## Realtime Communication
+
+* Socket.IO
+* WebSocket-based live updates
 
 ---
 
@@ -200,6 +228,33 @@ Core entities support:
 
 ---
 
+## Realtime Architecture
+
+PharmaAtlas uses a real-time event-driven architecture powered by Socket.IO.
+
+Workflow:
+
+```text
+User submits report
+        ↓
+Backend emits "report:created"
+        ↓
+Connected clients receive event
+        ↓
+Zustand store updates instantly
+        ↓
+Notification UI refreshes automatically
+```
+
+This enables:
+
+* Live medicine availability tracking
+* Instant community updates
+* Real-time collaborative verification
+
+---
+
+
 # Core Functionalities
 
 ## User Features
@@ -245,6 +300,11 @@ The application includes:
 * Dynamic modals
 * Real-time UI feedback
 * Professional dashboard experience
+* Live notification system
+* Instant report updates
+* Dynamic real-time interactions
+* Seamless cross-session synchronization
+
 
 ---
 
@@ -364,8 +424,6 @@ The platform includes:
 
 Planned improvements include:
 
-* Real-time WebSocket updates
-* Push notifications
 * Advanced AI medicine predictions
 * Pharmacy inventory sync
 * Progressive Web App support
