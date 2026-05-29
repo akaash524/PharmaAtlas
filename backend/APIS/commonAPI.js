@@ -27,8 +27,8 @@ commonApp.get('/logout',async(req,res)=>{
     //logout for user,author and admin
     res.clearCookie('token',{
         httpOnly:true,
-        secure:false,
-        sameSite:'lax'
+        secure: true,
+        sameSite:'none',
     })
     //send response
     res.status(200).json({
