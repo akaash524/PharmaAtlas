@@ -400,6 +400,18 @@ The platform follows production-grade standards including:
 
 ---
 
+# Live Deployment
+
+## Frontend
+
+🌐 https://pharma-atlas.vercel.app
+
+## Backend API
+
+⚙️ https://pharmaatlas.onrender.com
+
+---
+
 # Author
 
 Akaash
