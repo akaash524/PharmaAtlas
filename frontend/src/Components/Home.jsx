@@ -189,38 +189,56 @@ function Home() {
         </button>
 
   {/* FLOATING BOX */}
-  {openSuggestionBox && (
+{openSuggestionBox && (
 
-    <div
-      className="
-      absolute bottom-20 left-0
-      w-95
-      animate-in fade-in zoom-in-95
+  <div
+    className="
+    fixed inset-0
+    z-5000
+
+    bg-black/40
+    backdrop-blur-md
+
+    flex items-center
+    justify-center
+
+    p-6
+
+    animate-in fade-in
     "
-    >
+  >
 
-      {/* CLOSE BUTTON */}
-      <button
-        onClick={() =>
-          setOpenSuggestionBox(false)
-        }
+    {/* CLOSE BUTTON */}
+    <button
+      onClick={() =>
+        setOpenSuggestionBox(false)
+      }
+      className="
+      absolute top-15 right-6
 
-        className="
-        absolute -top-3 -right-3
-        w-10 h-10 rounded-full
-        bg-white shadow-xl
-        text-gray-600
-        hover:text-red-500
-        text-xl z-10
+      w-12 h-12
+      rounded-full
+
+      bg-white
+
+      shadow-xl
+
+      text-gray-600
+      hover:text-red-500
+
+      text-2xl
+
+      z-10
       "
-      >
-        ✕
-      </button>
+    >
+      ✕
+    </button>
 
-      <SuggestionBox />
+    <SuggestionBox />
+
+  </div>
+)}
     </div>
-  )}
-</div>
 
 
       {/* FLOATING REPORT BUTTON */}

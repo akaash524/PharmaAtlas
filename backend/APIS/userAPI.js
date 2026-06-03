@@ -8,6 +8,11 @@ import { UserModel } from '../MODELS/userModel.js'
 import { register } from '../SERVICES/authService.js'
 import { hash,compare } from 'bcryptjs'
 import { io } from '../server.js'
+import Groq from "groq-sdk";
+
+const groq = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+});
 
 export const userApp = exp.Router()
 
@@ -393,3 +398,166 @@ userApp.put('/change-password',verifyToken('user'),async(req,res)=>{
     res.status(200).json({message:'Password Updated Sucessfully'})
 
 })
+
+
+userApp.post("/ai/prescription-parser",verifyToken("user"),async (req, res) => {
+    try {
+      const {
+        extractedText = "",
+        symptoms = "",
+      } = req.body;
+
+      if (
+        !extractedText.trim() &&
+        !symptoms.trim()
+      ) {
+        return res.status(400).json({
+          message:
+            "Prescription text or symptoms are required",
+        });
+      }
+
+      const medicines =
+        await MedicineModel.find(
+          {},
+          {
+            name: 1,
+            genericName: 1,
+          }
+        );
+
+      const medicineSet =
+        medicines.map((m) => ({
+          id: m._id.toString(),
+          name: m.name,
+          genericName: m.genericName,
+        }));
+
+      let userContext = "";
+
+      if (
+        extractedText.trim() &&
+        symptoms.trim()
+      ) {
+        userContext = `
+Prescription Text:
+${extractedText}
+
+Symptoms:
+${symptoms}
+
+Task:
+1. Extract medicines from prescription.
+2. Match against available medicines.
+3. Use symptoms as supporting context.
+`;
+      } else if (
+        extractedText.trim()
+      ) {
+        userContext = `
+Prescription Text:
+${extractedText}
+
+Task:
+1. Extract medicines from prescription.
+2. Match against available medicines.
+3. Suggest alternatives if unavailable.
+`;
+      } else {
+        userContext = `
+Symptoms:
+${symptoms}
+
+Task:
+1. Identify medicines commonly used for these symptoms.
+2. ONLY choose from available medicines.
+3. If exact medicine is unavailable, suggest alternatives.
+`;
+      }
+
+      const prompt = `
+You are a medical inventory assistant.
+
+Available Medicines:
+
+${JSON.stringify(
+  medicineSet,
+  null,
+  2
+)}
+
+Rules:
+
+- ONLY use medicines from available medicines list.
+- NEVER invent medicines.
+- For prescription mode:
+  extract medicines from text.
+- For symptom mode:
+  recommend suitable medicines from inventory.
+- If medicine is unavailable,
+  suggest closest alternative.
+
+Return ONLY valid JSON.
+
+Format:
+
+{
+  "exactMatches": [
+    {
+      "name": "Dolo 650",
+      "id": "mongodb_id"
+    }
+  ],
+  "alternativeSuggestions": [
+    {
+      "requested": "Tylenol",
+      "alternative": "Dolo 650",
+      "alternativeId": "mongodb_id"
+    }
+  ]
+}
+
+${userContext}
+`;
+
+      const aiResponse =
+        await groq.chat.completions.create({
+          model:
+            "llama-3.3-70b-versatile",
+          messages: [
+            {
+              role: "user",
+              content: prompt,
+            },
+          ],
+          temperature: 0.2,
+        });
+
+      const content =
+        aiResponse.choices[0]
+          .message.content;
+
+      const cleaned =
+        content
+          .replace(/```json/g, "")
+          .replace(/```/g, "")
+          .trim();
+
+      const parsed =
+        JSON.parse(cleaned);
+
+      res.status(200).json({
+        message:
+          "Prescription parsed successfully",
+        payload: parsed,
+      });
+    } catch (err) {
+      console.log(err);
+
+      res.status(500).json({
+        message:
+          "Failed to parse prescription",
+      });
+    }
+  }
+);
