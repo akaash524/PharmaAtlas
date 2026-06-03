@@ -78,10 +78,19 @@ The community does what no single database can: keep availability data accurate,
 - Interactions stored as embedded sub-documents inside each report — fast, no extra joins
 - Reports with higher verify counts surface as more trustworthy
 
-###  AI-Powered Medicine Suggestions
-- Integrated AI feature that suggests medicines based on symptoms or context
-- Helps users who don't know the exact medicine name find what they need
-- Search-to-map pipeline: AI suggests → user selects → map filters → pharmacy found
+### AI Prescription Analysis
+- Upload a prescription image or PDF.
+- Automatic OCR text extraction using Tesseract.js.
+- PDF text extraction support using PDF.js.
+- AI-powered prescription parsing using Groq LLM.
+- Identifies medicines mentioned in prescriptions.
+- Suggests closest available alternatives when medicines are unavailable.
+- Automatically locates nearby pharmacies stocking detected medicines.
+
+### Symptom-Based Medicine Suggestions
+- Describe symptoms in natural language.
+- AI recommends medicines from the available inventory.
+- Matches suggestions with nearby pharmacies.
 
 ###  Pharmacy Discovery & Navigation
 - **Distance and ETA calculation** from user's current location to each pharmacy
@@ -118,7 +127,8 @@ The community does what no single database can: keep availability data accurate,
 | Axios | HTTP client with credential support |
 | Socket.IO Client | Real-time WebSocket communication |
 | react-hot-toast | Toast notifications |
-
+| Tesseract.js | Extract text from Images |
+| PDF.js | Extract text from Images |
 ### Backend
 | Technology | Purpose |
 |---|---|
@@ -138,6 +148,11 @@ The community does what no single database can: keep availability data accurate,
 | MongoDB Atlas | Cloud database hosting |
 | Vercel | Frontend deployment |
 | Render | Backend deployment |
+
+### AI & OCR
+- Groq LLM (Llama 3.3 70B)
+- Tesseract OCR
+- PDF.js Document Processing
 
 ---
 
@@ -317,6 +332,18 @@ npm run dev
 2. See unverified nearby reports in feed
 3. Click **Confirm** if you've seen the medicine there → verify count increments
 4. Click **Skip** to dismiss without voting
+
+---
+
+## AI Prescription Workflow
+
+1. User uploads a prescription image or PDF.
+2. OCR extracts text from the document.
+3. Extracted content is sent to the AI Prescription Parser.
+4. The AI identifies medicines mentioned in the prescription.
+5. Medicines are matched against the platform inventory.
+6. Alternative medicines are suggested when exact matches are unavailable.
+7. Nearby pharmacies stocking the medicines are displayed on the map.
 
 ---
 
