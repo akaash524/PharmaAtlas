@@ -414,41 +414,41 @@ export const useMapStore = create(
             ...state.nearbyReports,
           ],
 
-          markers: [
-            {
-              reportId: newReport._id,
+          // markers: [
+          //   {
+          //     reportId: newReport._id,
 
-              medicineName:
-                newReport?.medicineId?.name,
+          //     medicineName:
+          //       newReport?.medicineId?.name,
 
-              isVerified:
-                newReport?.pharmacyId?.isVerified,
+          //     isVerified:
+          //       newReport?.pharmacyId?.isVerified,
 
-              genericName:
-                newReport?.medicineId?.genericName,
+          //     genericName:
+          //       newReport?.medicineId?.genericName,
 
-              stockLevel:
-                newReport?.stockLevel,
+          //     stockLevel:
+          //       newReport?.stockLevel,
 
-              verifiedCount: 0,
-              skippedCount: 0,
-              deniedCount: 0,
+          //     verifiedCount: 0,
+          //     skippedCount: 0,
+          //     deniedCount: 0,
 
-              pharmacyName:
-                newReport?.pharmacyId?.name,
+          //     pharmacyName:
+          //       newReport?.pharmacyId?.name,
 
-              address:
-                newReport?.pharmacyId?.address,
+          //     address:
+          //       newReport?.pharmacyId?.address,
 
-              location:
-                newReport?.pharmacyId?.location,
+          //     location:
+          //       newReport?.pharmacyId?.location,
 
-              notes:
-                newReport?.notes,
-            },
+          //     notes:
+          //       newReport?.notes,
+          //   },
 
-            ...state.markers,
-          ],
+          //   ...state.markers,
+          // ],
         }));
     },
 
