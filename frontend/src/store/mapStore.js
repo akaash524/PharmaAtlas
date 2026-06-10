@@ -51,13 +51,13 @@ export const useMapStore = create(
       ========================================
       */
 
-      socket.on("report:created", async () => {
+      socket.on("report:created", async (data) => {
 
         console.log(
           "Live update → report-created"
         );
 
-        await get().refreshMapData();
+        get().appendReport(data);
       });
 
       /*
